@@ -25,6 +25,7 @@ const NavbarComponent = () => {
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/">Inicio</Nav.Link>
                         <Nav.Link as={Link} to="/products">Productos</Nav.Link>
+                        <Nav.Link as={Link} to="/about">Nosotros</Nav.Link>
                         {/* El enlace al carrito ahora es público, pero su contenido es protegido por el ProtectedRoute */}
                         <Nav.Link as={Link} to="/cart">
                             <FaShoppingCart className="me-1" aria-label="Carrito de compras" /> Carrito ({getTotalItems()})
