@@ -185,7 +185,7 @@ const ProductList = () => {
     return (
         <Container className="mt-5">
             <Helmet>
-                <title>Nuestros Productos - Mi Tienda React</title>
+                <title>Nuestros Productos - Milo Pasteleria</title>
                 <meta name="description" content="Explora nuestro catálogo de productos en línea." />
                 <meta property="og:title" content="Productos de Mi Tienda" />
                 <meta property="og:description" content="Descubre los mejores productos disponibles en nuestra tienda." />
@@ -235,9 +235,7 @@ const ProductList = () => {
                             <Card.Body className="d-flex flex-column">
                                 <Card.Title as="h5">{product.name}</Card.Title> {/* Usamos 'name' */}
                                 <Card.Subtitle className="mb-2 text-muted">{product.category}</Card.Subtitle> {/* Usamos 'category' */}
-                                <Card.Text className="flex-grow-1">
-                                    {product.description?.substring(0, 100)}... {/* Usamos 'description' */}
-                                </Card.Text>
+
                                 <div className="d-flex justify-content-between align-items-center mt-auto">
                                     <span className="fs-5 fw-bold">${product.price.toFixed(2)}</span> {/* Usamos 'price' */}
                                     <div>

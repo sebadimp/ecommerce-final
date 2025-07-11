@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <Container className="mt-5">
       <Helmet>
-        <title>Inicio - Mi Tienda React</title>
+        <title>Milo Pasteleria</title>
         <meta name="description" content="Bienvenido a la página de inicio de nuestra tienda online." />
       </Helmet>
       <Row className="justify-content-center">

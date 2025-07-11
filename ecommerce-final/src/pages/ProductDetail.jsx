@@ -103,7 +103,7 @@ const ProductDetail = () => {
         <Container className="mt-5">
             <Helmet>
                 {/* Usamos el operador de encadenamiento opcional (?) para evitar errores si 'product' es null temporalmente */}
-                <title>{product?.name} - Mi Tienda React</title>
+                <title>{product?.name} - Milo Pasteleria</title>
                 <meta name="description" content={product?.description?.substring(0, 160) + "..."} />
                 {/* Open Graph para redes sociales */}
                 <meta property="og:title" content={product?.name} />
