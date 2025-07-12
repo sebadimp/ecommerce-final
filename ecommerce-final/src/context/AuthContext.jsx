@@ -57,26 +57,26 @@ export const AuthProvider = ({ children }) => {
         return () => unsubscribe();
     }, []);
 
-    // Función para registrar un nuevo usuario con email y contraseña
-    const register = async (email, password) => {
+    const register = async (email, password, displayName = '') => { // Añadimos displayName como parámetro
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            // Firebase UserCredential contiene el objeto user.
-            // onAuthStateChanged se encargará de actualizar el estado `user` en el contexto.
+            // Si se proporciona un displayName, actualízalo
+            if (displayName) {
+                await updateProfile(userCredential.user, { displayName: displayName });
+            }
             return userCredential.user;
         } catch (error) {
-            throw error; // Propagar el error para que el componente que llama lo maneje (ej. LoginPage o un componente de registro)
+            throw error;
         }
     };
 
-    // Función para iniciar sesión con email y contraseña
     const login = async (email, password) => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            // onAuthStateChanged se encargará de actualizar el estado `user` en el contexto.
+            // No necesitas updateProfile aquí, ya que el displayName ya debería estar establecido
             return userCredential.user;
         } catch (error) {
-            throw error; // Propagar el error
+            throw error;
         }
     };
 

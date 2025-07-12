@@ -38,12 +38,9 @@ const NavbarComponent = () => {
                             <FaShoppingCart className="me-1" aria-label="Carrito de compras" /> Carrito ({getTotalItems()})
                         </Nav.Link>
 
-                        {/* Menú o Enlaces de ADMINISTRACIÓN - Visible SOLO para administradores */}
+                        /*** {/* Menú o Enlaces de ADMINISTRACIÓN - Visible SOLO para administradores */}
                         {isAdmin && (
                             <NavDropdown title={<><FaTools className="me-1" /> Administración</>} id="admin-nav-dropdown">
-                                <NavDropdown.Item as={Link} to="/admin/add-product">
-                                    Agregar Producto
-                                </NavDropdown.Item>
                                 {/* Si tienes una página de listado de productos de admin que incluya edición/eliminación */}
                                 <NavDropdown.Item as={Link} to="/products">
                                     Gestionar Productos {/* Esto podría ser una vista de tabla con acciones de CRUD */}
@@ -53,14 +50,14 @@ const NavbarComponent = () => {
                                 {/* <NavDropdown.Divider /> */}
                                 {/* <NavDropdown.Item as={Link} to="/admin/users-management">Gestión de Usuarios</NavDropdown.Item> */}
                             </NavDropdown>
-                        )}
+                        )} *
                     </Nav>
                     <Nav>
                         {isAuthenticated ? (
                             <>
                                 <Navbar.Text className="me-3">
                                     {/* Muestra el email si user.email existe, de lo contrario 'Usuario' */}
-                                    <FaUserCircle className="me-1" aria-label="Usuario" /> Hola, {user?.displayName}!
+                                    <FaUserCircle className="me-1" aria-label="Usuario" /> Hola, {user?.displayName || user?.email.split('@')[0]}!
                                 </Navbar.Text>
                                 <Button variant="outline-light" onClick={handleLogout} aria-label="Cerrar sesión">
                                     <FaSignOutAlt className="me-1" /> Cerrar Sesión
