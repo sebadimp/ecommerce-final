@@ -30,31 +30,10 @@ export const AuthProvider = ({ children }) => {
                 // === Lógica para asignar roles ===
                 // Opción 1 (Más simple para empezar, pero NO recomendada para producción si la seguridad es clave):
                 // Asignar rol de admin basado en el email
-                if (firebaseUser.email === 'admin@admin.com') { // <-- ¡IMPORTANTE! Cambia esto por el email que uses para tu admin
+                if (firebaseUser.email === 'admin@taltech.com') { // <-- ¡IMPORTANTE! Cambia esto por el email que uses para tu admin
                     userRole = 'admin';
                 }
 
-                // Opción 2 (Recomendada para producción: Usar Custom Claims de Firebase Auth)
-                // Necesitarías configurar Custom Claims desde tu backend (ej. Cloud Functions)
-                // try {
-                //     const idTokenResult = await firebaseUser.getIdTokenResult(true); // true para forzar un refresh del token
-                //     userRole = idTokenResult.claims.role || 'user';
-                // } catch (error) {
-                //     console.error("Error al obtener Custom Claims:", error);
-                // }
-
-                // Opción 3 (Si guardas el rol en Firestore/Realtime Database):
-                // Necesitarías buscar el documento del usuario en tu base de datos
-                // if (db) { // Si db está importado y configurado
-                //     const userDocRef = doc(db, "users", firebaseUser.uid);
-                //     const userDoc = await getDoc(userDocRef);
-                //     if (userDoc.exists()) {
-                //         userRole = userDoc.data().role || 'user';
-                //     } else {
-                //         // Si el documento no existe, crea uno para el nuevo usuario con rol por defecto
-                //         await setDoc(userDocRef, { email: firebaseUser.email, role: 'user' });
-                //     }
-                // }
 
 
                 const userData = {

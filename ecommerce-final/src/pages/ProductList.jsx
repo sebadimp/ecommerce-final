@@ -7,6 +7,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FaSearch, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 
+// Importamos useAuth para acceder al rol del usuario
+import { useAuth } from '../context/AuthContext'; // <-- ¡Importa esto!
+
 // Componentes
 import AddProductForm from '../components/AddProductForm';
 import EditProductForm from '../components/EditProductForm';
@@ -20,6 +23,9 @@ import { Modal } from 'react-bootstrap';
 const API_URL = 'https://6827e04d6b7628c529119050.mockapi.io/productos';
 
 const ProductList = () => {
+    // Obtenemos el estado 'isAdmin' del contexto de autenticación
+    const { isAdmin } = useAuth(); // <-- ¡Añade esto!
+
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -195,11 +201,14 @@ const ProductList = () => {
                 <Col>
                     <h1>Catálogo de Productos</h1>
                 </Col>
-                <Col xs="auto">
-                    <Button variant="success" onClick={() => setShowAddModal(true)} aria-label="Agregar nuevo producto">
-                        <FaPlus className="me-1" /> Agregar Producto
-                    </Button>
-                </Col>
+                {/* Botón para AGREGAR PRODUCTO - Visible SOLO para administradores */}
+                {isAdmin && ( // <-- ¡Añade esta condición!
+                    <Col xs="auto">
+                        <Button variant="success" onClick={() => setShowAddModal(true)} aria-label="Agregar nuevo producto">
+                            <FaPlus className="me-1" /> Agregar Producto
+                        </Button>
+                    </Col>
+                )} {/* <-- ¡Cierra esta condición! */}
             </Row>
 
             {/* Barra de Búsqueda */}
@@ -239,23 +248,28 @@ const ProductList = () => {
                                 <div className="d-flex justify-content-between align-items-center mt-auto">
                                     <span className="fs-5 fw-bold">${product.price.toFixed(2)}</span> {/* Usamos 'price' */}
                                     <div>
-                                        <Button
-                                            variant="info"
-                                            size="sm"
-                                            className="me-2"
-                                            onClick={() => handleEditClick(product)}
-                                            aria-label={`Editar ${product.name}`}
-                                        >
-                                            <FaEdit />
-                                        </Button>
-                                        <Button
-                                            variant="danger"
-                                            size="sm"
-                                            onClick={() => handleDeleteClick(product)}
-                                            aria-label={`Eliminar ${product.name}`}
-                                        >
-                                            <FaTrash />
-                                        </Button>
+                                        {/* Botones de EDICIÓN y ELIMINACIÓN - Visibles SOLO para administradores */}
+                                        {isAdmin && ( // <-- ¡Añade esta condición!
+                                            <> {/* Fragmento para agrupar los botones */}
+                                                <Button
+                                                    variant="info"
+                                                    size="sm"
+                                                    className="me-2"
+                                                    onClick={() => handleEditClick(product)}
+                                                    aria-label={`Editar ${product.name}`}
+                                                >
+                                                    <FaEdit />
+                                                </Button>
+                                                <Button
+                                                    variant="danger"
+                                                    size="sm"
+                                                    onClick={() => handleDeleteClick(product)}
+                                                    aria-label={`Eliminar ${product.name}`}
+                                                >
+                                                    <FaTrash />
+                                                </Button>
+                                            </>
+                                        )} {/* <-- ¡Cierra esta condición! */}
                                     </div>
                                 </div>
                                 <Link to={`/products/${product.id}`} className="btn btn-primary btn-sm mt-3">Ver Detalles</Link>
@@ -275,41 +289,48 @@ const ProductList = () => {
                 />
             )}
 
-            {/* Modal para Agregar Producto */}
-            <Modal show={showAddModal} onHide={() => setShowAddModal(false)} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Agregar Nuevo Producto</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {/* onProductAdded recibirá el producto ya mapeado */}
-                    <AddProductForm onProductAdded={handleProductAdded} />
-                </Modal.Body>
-            </Modal>
+            {/* Modal para Agregar Producto (ahora también controlado por isAdmin si está dentro de un botón condicional) */}
+            {/* Es buena práctica que el Modal exista si el botón es visible para el admin */}
+            {isAdmin && ( // <-- Puedes añadir esta condición si quieres que el modal solo exista en el DOM para admins
+                <Modal show={showAddModal} onHide={() => setShowAddModal(false)} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Agregar Nuevo Producto</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {/* onProductAdded recibirá el producto ya mapeado */}
+                        <AddProductForm onProductAdded={handleProductAdded} />
+                    </Modal.Body>
+                </Modal>
+            )}
 
-            {/* Modal para Editar Producto */}
-            <Modal show={showEditModal} onHide={handleCancelEdit} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Editar Producto</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {productToEdit && (
-                        <EditProductForm
-                            product={productToEdit} // productToEdit ya está mapeado con name, price, etc.
-                            onProductUpdated={handleProductUpdated}
-                            onCancel={handleCancelEdit}
-                        />
-                    )}
-                </Modal.Body>
-            </Modal>
+            {/* Modal para Editar Producto (similar, existencia en DOM para admins) */}
+            {isAdmin && ( // <-- Puedes añadir esta condición
+                <Modal show={showEditModal} onHide={handleCancelEdit} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Editar Producto</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {productToEdit && (
+                            <EditProductForm
+                                product={productToEdit} // productToEdit ya está mapeado con name, price, etc.
+                                onProductUpdated={handleProductUpdated}
+                                onCancel={handleCancelEdit}
+                            />
+                        )}
+                    </Modal.Body>
+                </Modal>
+            )}
 
-            {/* Modal de Confirmación de Eliminación */}
-            <ConfirmationModal
-                show={showDeleteModal}
-                title="Confirmar Eliminación"
-                message={productToDelete ? `¿Estás seguro de que quieres eliminar "${productToDelete.name}"? Esta acción es irreversible.` : '¿Estás seguro de que quieres eliminar este producto?'}
-                onConfirm={handleConfirmDelete}
-                onCancel={handleCancelDelete}
-            />
+            {/* Modal de Confirmación de Eliminación (similar, existencia en DOM para admins) */}
+            {isAdmin && ( // <-- Puedes añadir esta condición
+                <ConfirmationModal
+                    show={showDeleteModal}
+                    title="Confirmar Eliminación"
+                    message={productToDelete ? `¿Estás seguro de que quieres eliminar "${productToDelete.name}"? Esta acción es irreversible.` : '¿Estás seguro de que quieres eliminar este producto?'}
+                    onConfirm={handleConfirmDelete}
+                    onCancel={handleCancelDelete}
+                />
+            )}
         </Container>
     );
 };
