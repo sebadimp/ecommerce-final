@@ -38,7 +38,7 @@ const NavbarComponent = () => {
                             <FaShoppingCart className="me-1" aria-label="Carrito de compras" /> Carrito ({getTotalItems()})
                         </Nav.Link>
 
-                        /*** {/* Menú o Enlaces de ADMINISTRACIÓN - Visible SOLO para administradores */}
+                       {/* Menú o Enlaces de ADMINISTRACIÓN - Visible SOLO para administradores */}
                         {isAdmin && (
                             <NavDropdown title={<><FaTools className="me-1" /> Administración</>} id="admin-nav-dropdown">
                                 {/* Si tienes una página de listado de productos de admin que incluya edición/eliminación */}
