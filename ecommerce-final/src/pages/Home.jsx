@@ -2,6 +2,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-bootstrap';
+import HomeCarousel from '../components/HomeCarousel';
+import HomeHeroMessage from '../components/HomeHeroMessage';
+import HomeBeneficios from '../components/HomeBeneficios';
+import FeaturedProducts from '../components/FeaturedProducts';
 
 const Home = () => {
   return (
@@ -10,13 +14,10 @@ const Home = () => {
         <title>Milo Pasteleria</title>
         <meta name="description" content="Bienvenido a la página de inicio de nuestra tienda online." />
       </Helmet>
-      <Row className="justify-content-center">
-        <Col md={8} className="text-center">
-          <h1>¡Bienvenido a Mi Tienda React!</h1>
-          <p className="lead">Explora nuestros productos o inicia sesión para acceder a tu carrito.</p>
-          {/* Aquí podrías añadir un botón para ver productos o iniciar sesión */}
-        </Col>
-      </Row>
+      <HomeCarousel/>
+      <HomeHeroMessage/>
+      <FeaturedProducts/>
+      <HomeBeneficios/>
     </Container>
   );
 };
