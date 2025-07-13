@@ -75,13 +75,6 @@ const FeaturedProducts = () => {
     return (
         <Container className="my-5">
             <h2 className="text-center mb-4">Algunos de nuestros productos</h2>
-            {isAdmin && (
-                <div className="text-center mb-4">
-                    <Button as={Link} to="/admin/add-product" variant="success">
-                        <FaPlus className="me-1" /> Agregar Nuevo Producto
-                    </Button>
-                </div>
-            )}
             {products.length === 0 ? (
                 <Alert variant="info" className="text-center">
                     No hay productos destacados disponibles en este momento.

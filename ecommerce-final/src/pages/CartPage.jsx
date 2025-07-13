@@ -1,4 +1,3 @@
-// src/pages/CartPage.jsx
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Container, Row, Col, Button } from 'react-bootstrap';
@@ -20,7 +19,7 @@ const CartPage = () => {
   return (
     <Container className="mt-5">
       <Helmet>
-        <title>Carrito de Compras - Mi Tienda React</title>
+        <title>Milo Pasteleria</title>
         <meta name="description" content="Revisa los productos en tu carrito de compras." />
       </Helmet>
       <Row className="justify-content-center">
@@ -33,10 +32,10 @@ const CartPage = () => {
               <ul className="list-group mb-3">
                 {cartItems.map(item => (
                   <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
-                    {/* AÑADIMOS LA IMAGEN AQUÍ */}
+
                     <div className="d-flex align-items-center">
                       <img
-                        src={item.image || 'https://via.placeholder.com/80x80?text=No+Image'} // Usa item.imagen, con un placeholder si no existe
+                        src={item.image || 'https://via.placeholder.com/80x80?text=No+Image'} 
                         alt={item.nombre || item.name || 'Producto'}
                         style={{ width: '80px', height: '80px', objectFit: 'cover', marginRight: '15px', borderRadius: '5px' }}
                         className="img-fluid"
@@ -46,7 +45,6 @@ const CartPage = () => {
                         <small>Cantidad: {item.quantity}</small>
                       </div>
                     </div>
-                    {/* FIN DE LA SECCIÓN DE IMAGEN */}
 
                     <div>
                       <span className="fw-bold">${((item.precio || item.price || 0) * item.quantity).toFixed(2)}</span>

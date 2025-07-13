@@ -1,12 +1,12 @@
 
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { FaShippingFast, FaCreditCard, FaShieldAlt } from 'react-icons/fa'; // Iconos de beneficios
+import { FaShippingFast, FaCreditCard, FaShieldAlt } from 'react-icons/fa';
 
 const HomeBeneficios = () => {
     return (
         <Container className="my-5">
-            <Row className="justify-content-center text-center g-4"> {/* g-4 para espacio entre columnas */}
+            <Row className="justify-content-center text-center g-4">
                 <Col md={4}>
                     <Card className="h-100 shadow-sm p-4">
                         <Card.Body>

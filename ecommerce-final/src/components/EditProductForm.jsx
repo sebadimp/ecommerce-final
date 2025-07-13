@@ -1,6 +1,6 @@
-// src/components/EditProductForm.jsx
+
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Row, Col, Spinner } from 'react-bootstrap'; // Se quitó 'Alert'
+import { Form, Button, Row, Col, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -11,11 +11,10 @@ const ErrorText = styled.p`
     margin-top: 5px;
 `;
 
-// ** LA URL DE TU MOCKAPI (¡Confirmá de nuevo!) **
 const API_URL = 'https://6827e04d6b7628c529119050.mockapi.io/productos';
 
 const EditProductForm = ({ product, onProductUpdated, onCancel }) => {
-    // Estos estados internos del formulario siguen usando 'name', 'price', etc.
+
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
@@ -25,13 +24,12 @@ const EditProductForm = ({ product, onProductUpdated, onCancel }) => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
 
-    // Cargar los datos del producto cuando se monta el componente o el `product` prop cambie
     useEffect(() => {
         if (product) {
             setId(product.id);
-            // Aseguramos que los valores sean strings, ya que los inputs esperan strings
+
             setName(product.name || '');
-            setPrice(product.price ? String(product.price) : ''); // Convertir a string para el input
+            setPrice(product.price ? String(product.price) : '');
             setDescription(product.description || '');
             setCategory(product.category || '');
             setImage(product.image || '');
@@ -41,7 +39,7 @@ const EditProductForm = ({ product, onProductUpdated, onCancel }) => {
     const validateForm = () => {
         const newErrors = {};
         if (!name.trim()) newErrors.name = 'El nombre es obligatorio.';
-        // Aseguramos que el precio sea un número y mayor a 0, y que no sea una cadena vacía
+
         if (Number(price) <= 0 || isNaN(Number(price)) || price.trim() === '') newErrors.price = 'El precio debe ser un número mayor a 0.';
         if (description.length < 10) newErrors.description = 'La descripción debe tener al menos 10 caracteres.';
         if (!category.trim()) newErrors.category = 'La categoría es obligatoria.';
@@ -58,22 +56,18 @@ const EditProductForm = ({ product, onProductUpdated, onCancel }) => {
 
         setLoading(true);
         try {
-            // ** OBJETO A ENVIAR A MOCKAPI - ¡AQUÍ ES CLAVE EL MAPEO DE NOMBRES! **
+
             const productToSend = {
                 nombre: name,
-                precio: Number(price), // Convertir a número para la API
+                precio: Number(price),
                 detalle: description,
                 categoria: category,
                 imagen: image || 'https://via.placeholder.com/300',
             };
 
-            // console.log("Enviando producto (PUT):", productToSend); // Para depurar
-
-            const response = await axios.put(`${API_URL}/${id}`, productToSend); // <--- Usamos la nueva URL
+            const response = await axios.put(`${API_URL}/${id}`, productToSend);
             toast.success('Producto actualizado exitosamente!');
 
-            // Llama al callback con el producto que MockAPI devuelve (ya tendrá su ID)
-            // Y lo mapeamos de nuevo al formato 'name', 'price' para que ProductList lo entienda
             if (onProductUpdated) onProductUpdated({
                 id: response.data.id,
                 name: response.data.nombre,
@@ -117,7 +111,7 @@ const EditProductForm = ({ product, onProductUpdated, onCancel }) => {
                 <Form.Group as={Col} controlId="editProductPrice">
                     <Form.Label>Precio</Form.Label>
                     <Form.Control
-                        type="number" // Asegura que el input sea numérico
+                        type="number"
                         placeholder="0.00"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
@@ -153,7 +147,7 @@ const EditProductForm = ({ product, onProductUpdated, onCancel }) => {
                         onChange={(e) => setImage(e.target.value)}
                         isInvalid={!!errors.image}
                     />
-                     <Form.Control.Feedback type="invalid">
+                    <Form.Control.Feedback type="invalid">
                         {errors.image}
                     </Form.Control.Feedback>
                 </Form.Group>

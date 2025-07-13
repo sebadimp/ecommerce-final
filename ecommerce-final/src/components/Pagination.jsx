@@ -1,7 +1,7 @@
 // src/components/Pagination.jsx
 import React from 'react';
 import styled from 'styled-components';
-import { Pagination as BBPagination } from 'react-bootstrap'; // Renombramos para no confundir con nuestro componente
+import { Pagination as BBPagination } from 'react-bootstrap'; 
 
 const PaginationWrapper = styled.div`
     display: flex;

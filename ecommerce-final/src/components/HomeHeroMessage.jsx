@@ -1,10 +1,9 @@
-// src/components/HomeHeroMessage.jsx
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
 const HomeHeroMessage = () => {
   return (
-    <Container className="my-5"> {/* my-5 para margen superior e inferior */}
+    <Container className="my-5">
       <Row className="justify-content-center">
         <Col md={10} className="text-center">
           <h2 className="display-4 fw-bold text-primary">

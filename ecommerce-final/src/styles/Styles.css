@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
+:root {
+    --color-primary-cream: #bb93a386;
+    --color-accent-gold: #e0b88d;
+    --color-accent-gold-darker: #c29e7a;
+    --color-accent-gold-rgb: 224, 0, 141;
+}
+
+body {
+    background-color: var(--color-primary-cream);
+    color: var(--color-text-dark-brown);
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+}
+
+
+.welcome-box {
+    border: 3px solid var(--color-border-subtle);
+    background-color: rgba(var(--color-accent-gold-rgb), 0.15);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    display: inline-block;
+}

@@ -13,9 +13,13 @@ code {
     monospace;
 }
 
-/* Estilos generales para mensajes de error, si no usas Toastify para todo */
 .error-message {
   color: red;
   font-size: 0.9em;
   margin-top: 5px;
+}
+
+:root {
+  --color-primary-cream: #bb93a386;           /* <-- ¡CAMBIADO A ROSA SUAVE! */
+
 }

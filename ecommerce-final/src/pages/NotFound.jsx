@@ -1,4 +1,3 @@
-// src/pages/NotFound.jsx
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Container, Row, Col, Button } from 'react-bootstrap';
@@ -8,7 +7,7 @@ const NotFound = () => {
   return (
     <Container className="mt-5 text-center">
       <Helmet>
-        <title>Página no encontrada - Mi Tienda React</title>
+        <title>Milo Pasteleria</title>
         <meta name="description" content="La página que buscas no existe." />
       </Helmet>
       <Row className="justify-content-center">

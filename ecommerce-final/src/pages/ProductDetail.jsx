@@ -1,46 +1,40 @@
-// src/pages/ProductDetail.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { Container, Row, Col, Card, Button, Spinner, Alert } from 'react-bootstrap';
-import { useCart } from '../context/CartContext'; // Para añadir al carrito
-import { toast } from 'react-toastify'; // Para notificaciones
+import { useCart } from '../context/CartContext';
+import { toast } from 'react-toastify'; 
 
-// ** LA URL BASE DE TU MOCKAPI (¡Verificá que sea esta!) **
+
 const API_URL = 'https://6827e04d6b7628c529119050.mockapi.io/productos';
 
 const ProductDetail = () => {
-    const { id } = useParams(); // Obtiene el ID del producto de la URL (ej. /products/1)
-    const [product, setProduct] = useState(null); // Aquí guardaremos el producto mapeado
+    const { id } = useParams(); 
+    const [product, setProduct] = useState(null); 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [quantity, setQuantity] = useState(1); // Cantidad a agregar al carrito
+    const [quantity, setQuantity] = useState(1);
 
-    const { addItem } = useCart(); // Hook para el contexto del carrito
+    const { addItem } = useCart(); 
 
     useEffect(() => {
         const fetchProduct = async () => {
             setLoading(true);
             setError(null);
             try {
-                // Hacemos la solicitud GET para un producto específico usando su ID
                 const response = await axios.get(`${API_URL}/${id}`);
-                // console.log("Respuesta de API para detalle:", response.data); // Para depuración
 
-                // ** Mapeamos las propiedades de la API (nombre, precio, etc.)
-                // ** a las propiedades que el componente ProductDetail espera (name, price, etc.) **
                 setProduct({
                     id: response.data.id,
                     name: response.data.nombre,
-                    price: Number(response.data.precio), // Aseguramos que sea número
+                    price: Number(response.data.precio),
                     description: response.data.detalle,
                     category: response.data.categoria,
                     image: response.data.imagen,
                 });
             } catch (err) {
                 console.error("Error fetching product details:", err);
-                // Si el error es 404 (producto no encontrado), mostramos un mensaje específico
                 if (err.response && err.response.status === 404) {
                     setError('El producto solicitado no fue encontrado.');
                     toast.error('Producto no encontrado.');
@@ -54,19 +48,18 @@ const ProductDetail = () => {
         };
 
         fetchProduct();
-    }, [id]); // Dependencia: se ejecuta cuando el ID de la URL cambia
+    }, [id]); 
 
-    // Función para manejar el botón "Agregar al Carrito"
+
     const handleAddToCart = () => {
         if (product && quantity > 0) {
-            addItem(product, quantity); // 'product' ya está mapeado con 'name', 'price', etc.
+            addItem(product, quantity);
             toast.success(`${quantity} x ${product.name} agregado(s) al carrito!`);
         } else {
             toast.error('Por favor, selecciona una cantidad válida para agregar al carrito.');
         }
     };
 
-    // --- Renderizado Condicional ---
     if (loading) {
         return (
             <Container className="mt-5 text-center">
@@ -89,7 +82,6 @@ const ProductDetail = () => {
         );
     }
 
-    // Si no hay producto después de la carga y no hay error (ej. ID inexistente o eliminado)
     if (!product) {
         return (
             <Container className="mt-5 text-center">
@@ -102,10 +94,8 @@ const ProductDetail = () => {
     return (
         <Container className="mt-5">
             <Helmet>
-                {/* Usamos el operador de encadenamiento opcional (?) para evitar errores si 'product' es null temporalmente */}
-                <title>{product?.name} - Milo Pasteleria</title>
+                <title>Milo Pasteleria</title>
                 <meta name="description" content={product?.description?.substring(0, 160) + "..."} />
-                {/* Open Graph para redes sociales */}
                 <meta property="og:title" content={product?.name} />
                 <meta property="og:description" content={product?.description?.substring(0, 160) + "..."} />
                 <meta property="og:image" content={product?.image || 'https://via.placeholder.com/400'} />
@@ -115,7 +105,7 @@ const ProductDetail = () => {
             <Row className="justify-content-center">
                 <Col md={10} lg={8}>
                     <Card className="shadow-sm">
-                        <Row g={0}> {/* g=0 para quitar el gutter entre columnas */}
+                        <Row g={0}>
                             <Col md={5}>
                                 <Card.Img
                                     src={product.image || 'https://via.placeholder.com/400'}
@@ -133,7 +123,6 @@ const ProductDetail = () => {
 
                                     <hr />
 
-                                    {/* Control de cantidad para agregar al carrito */}
                                     <div className="d-flex align-items-center mb-3">
                                         <Button variant="outline-secondary" onClick={() => setQuantity(Math.max(1, quantity - 1))} aria-label="Disminuir cantidad">-</Button>
                                         <span className="mx-2 fs-5">{quantity}</span>

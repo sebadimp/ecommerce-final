@@ -1,4 +1,3 @@
-// src/pages/LoginPage.jsx
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
@@ -19,7 +18,7 @@ const LoginPage = () => {
     try {
       await login(username, password);
       toast.success('¡Inicio de sesión exitoso!');
-      navigate('/products'); // Redirigir a una página protegida o a la lista de productos
+      navigate('/products'); 
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -30,7 +29,7 @@ const LoginPage = () => {
   return (
     <Container className="mt-5">
       <Helmet>
-        <title>Iniciar Sesión - Mi Tienda React</title>
+        <title>Milo Pasteleria</title>
         <meta name="description" content="Inicia sesión en tu cuenta para acceder a tu carrito y más." />
       </Helmet>
       <Row className="justify-content-center">
@@ -41,7 +40,7 @@ const LoginPage = () => {
               <Form.Label>Usuario</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingresa tu usuario (ej: admin)"
+                placeholder="Ingresa tu usuario"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -53,7 +52,7 @@ const LoginPage = () => {
               <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Contraseña (ej: admin)"
+                placeholder="Ingresa tu contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -66,7 +65,8 @@ const LoginPage = () => {
             </Button>
           </Form>
           <p className="mt-3 text-center">
-            <small>Credenciales de prueba: usuario "admin", contraseña "admin"</small>
+            <small>Credenciales de prueba: usuario "admin@taltech.com", contraseña "admin123"</small><br />
+            <small>usuario "usuario@taltech.com", contraseña "usurio123"</small>
           </p>
         </Col>
       </Row>
